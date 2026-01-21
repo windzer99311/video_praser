@@ -1,17 +1,14 @@
-import json
 import requests
 
 def main(context):
     try:
-        body = context.req.body or "{}"
-        data = json.loads(body)
-
+        # Body is already parsed by Appwrite
+        data = context.req.body or {}
         url = data.get("url")
+
         if not url:
-            return context.res.json(
-                {"error": "url is required"},
-                status=400
-            )
+            context.res.status(400)
+            return context.res.json({"error": "url is required"})
 
         api = "https://api.vidssave.com/api/contentsite_api/media/parse"
 
@@ -32,13 +29,13 @@ def main(context):
 
         r = requests.post(api, headers=headers, data=payload, timeout=15)
 
+        context.res.status(r.status_code)
         return context.res.json({
-            "status": r.status_code,
             "body": r.text
         })
 
     except Exception as e:
-        return context.res.json(
-            {"error": str(e)},
-            status=500
-        )
+        context.res.status(500)
+        return context.res.json({
+            "error": str(e)
+        })
