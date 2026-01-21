@@ -1,12 +1,12 @@
 import json
 import requests
-import os
 
 def main(context):
     try:
-        body = json.loads(context.req.body or "{}")
-        url = body.get("url")
+        body = context.req.body or "{}"
+        data = json.loads(body)
 
+        url = data.get("url")
         if not url:
             return context.res.json(
                 {"error": "url is required"},
@@ -24,7 +24,7 @@ def main(context):
         }
 
         payload = {
-            "auth": os.getenv("VIDSSAVE_AUTH", "20250901majwlqo"),
+            "auth": "20250901majwlqo",
             "domain": "api-ak.vidssave.com",
             "origin": "source",
             "link": url
@@ -33,7 +33,7 @@ def main(context):
         r = requests.post(api, headers=headers, data=payload, timeout=15)
 
         return context.res.json({
-            "status_code": r.status_code,
+            "status": r.status_code,
             "body": r.text
         })
 
