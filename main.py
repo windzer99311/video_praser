@@ -1,14 +1,9 @@
-import json
-import sys
+def main(context):
+    # Access input payload like this:
+    data = context.payload  # this is a dictionary
+    name = data.get("name", "Guest")
 
-# Appwrite will call this
-def main(args):
-    # args is a dictionary with input data
-    name = args.get("name", "Guest")
-
-    # Your function logic
     print(f"Hello from Appwrite Function, {name}!")
 
-    # Optional output
-    output = {"status": "success", "message": f"Hello, {name}"}
-    return output
+    # Return a dictionary as output
+    return {"status": "success", "message": f"Hello, {name}"}
