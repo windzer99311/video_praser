@@ -1,5 +1,5 @@
 import requests
 
-def main(context):
+def main():
     print("Sucess")
     return "Yes"
