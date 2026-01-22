@@ -2,9 +2,8 @@ import requests
 
 def main(context):
     # This checks for 'link' OR 'video_url'
-    payload = context.req.body or {}
-    link = payload.get("link") or payload.get("video_url")
-
+    link="https://youtu.be/z3UHfi9vpbc?si=yk6j3HPOU61qhttN"
+    
     if not link:
         # This is the 400 error you just saw
         return context.res.json({"error": "No link provided"}, 400)
