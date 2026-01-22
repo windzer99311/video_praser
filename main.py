@@ -1,12 +1,12 @@
 import requests
 
 def main(context):
-    # 1. Get the link from the request body
-    # This matches the 'video_url' we sent in the previous test script
+    # This checks for 'link' OR 'video_url'
     payload = context.req.body or {}
     link = payload.get("link") or payload.get("video_url")
 
     if not link:
+        # This is the 400 error you just saw
         return context.res.json({"error": "No link provided"}, 400)
 
     context.log(f"Processing link: {link}")
