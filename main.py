@@ -1,9 +1,18 @@
 def main(context):
-    # Access input payload like this:
-    data = context.payload  # this is a dictionary
-    name = data.get("name", "Guest")
+    # Log some info to the Appwrite console
+    context.log("Hello, Appwrite! The function has started.")
 
-    print(f"Hello from Appwrite Function, {name}!")
+    # Check if the request is a GET or POST
+    method = context.req.method
+    
+    # Get data from the request body (if provided)
+    payload = context.req.body or {}
 
-    # Return a dictionary as output
-    return {"status": "success", "message": f"Hello, {name}"}
+    # Logic: Return a simple greeting
+    name = payload.get("name", "Guest")
+    
+    return context.res.json({
+        "message": f"Hello {name}!",
+        "method": method,
+        "status": "success"
+    })
