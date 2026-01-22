@@ -26,5 +26,9 @@ def main(context):
     response = requests.post(api, headers=headers,data=data,timeout=5)
     audio_stream=None
     size=None
-    a=response.json()
-    return a
+    if response.status_code==200:
+        a=response.json()
+        return a
+    else:
+        b="Failed"
+        return b
