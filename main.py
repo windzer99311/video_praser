@@ -26,15 +26,5 @@ def main(context):
     response = requests.post(api, headers=headers,data=data,timeout=5)
     audio_stream=None
     size=None
-    a=response.json()["data"]
-    print(a)
-    for items in a["resources"]:
-        if items["quality"]=="48KBPS":
-            audio_stream=items["download_url"]
-            break
-    if audio_stream and size:
-        return{
-            "stream": audio_stream,
-        }
-    else:
-        return None
+    a=response.json()
+    return a
